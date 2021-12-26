@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
@@ -22,32 +24,37 @@ class OurLoginForm extends StatefulWidget {
 }
 
 class _OurLoginFormState extends State<OurLoginForm> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  void _loginUser({@required loginType? type, String? email,  String? password,  BuildContext? context}) async {
-    CurrentUser _currentUser = Provider.of<CurrentUser>(context!, listen: false);
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  void _loginUser(
+      {@required loginType? type,
+      String? email,
+      String? password,
+      BuildContext? context}) async {
+    CurrentUser _currentUser =
+        Provider.of<CurrentUser>(context!, listen: false);
     try {
-      String _returnString="Error";
+      String _returnString = "Error";
       switch (type) {
         case loginType.email:
           _returnString =
-          await _currentUser.loginUserWithEmail(email!, password!);
+              await _currentUser.loginUserWithEmail(email!, password!);
           break;
         case loginType.google:
-          _returnString =
-          await _currentUser.loginUserWithGoogle();
+          _returnString = await _currentUser.loginUserWithGoogle();
           break;
         default:
-      } 
-      
-      
+      }
+
       if (_returnString == "Success") {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (route) => false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(_returnString),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ));
       }
     } catch (e) {
@@ -57,10 +64,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
 
   Widget _googleButton() {
     return SignInButton(Buttons.Google, onPressed: () {
-      _loginUser(
-                type: loginType.google, 
-                context: context
-              );
+      _loginUser(type: loginType.google, context: context);
     });
   }
 
@@ -100,11 +104,10 @@ class _OurLoginFormState extends State<OurLoginForm> {
         ElevatedButton(
             onPressed: () {
               _loginUser(
-                type: loginType.email,
-                email:_emailController.text, 
-                password:_passwordController.text, 
-                context: context
-              );
+                  type: loginType.email,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  context: context);
             },
             style: ElevatedButton.styleFrom(
               primary: const Color.fromRGBO(3, 105, 128, 1),
@@ -123,7 +126,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             )),
         TextButton(
           onPressed: () {
-            // ignore: avoid_print
+            
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const OurSignUp()));
           },

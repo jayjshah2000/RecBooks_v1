@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,22 +15,22 @@ class OurSignUpForm extends StatefulWidget {
 }
 
 class _OurSignUpFormState extends State<OurSignUpForm> {
-  TextEditingController _fullNameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-  void _signUpUser(String email, String password, BuildContext context) async {
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  void _signUpUser(String email, String password, String fullName, BuildContext context) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
     try {
-      String _returnString = await _currentUser.signUpUser(email, password);
+      String _returnString = await _currentUser.signUpUser(email, password, fullName);
       if (_returnString == "Success") {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+            .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(_returnString),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ));
       }
     } catch (e) {
@@ -90,7 +92,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
             onPressed: () {
               if (_passwordController.text == _confirmPasswordController.text) {
                 _signUpUser(
-                    _emailController.text, _passwordController.text, context);
+                    _emailController.text, _passwordController.text, _fullNameController.text, context);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("Passwords do not match"),

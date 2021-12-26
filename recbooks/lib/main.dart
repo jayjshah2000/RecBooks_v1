@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recbooks/screens/login/login.dart';
+import 'package:recbooks/screens/root/root.dart';
 import 'package:recbooks/states/current_user.dart';
 
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => CurrentUser(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OurLogin(),
+        home: OurRoot(),
       ),
     );
   }
