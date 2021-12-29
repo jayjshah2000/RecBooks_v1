@@ -46,10 +46,7 @@ class CurrentUser extends ChangeNotifier {
       if (_returnString == "Success") {
         retVal = "Success";
       }
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-      _currentUser.uid = _authResult.user!.uid;
-      _currentUser.email = _authResult.user!.email!;
+      
       // retVal = "Success";
 
       // retVal = true;

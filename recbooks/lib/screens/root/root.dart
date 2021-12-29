@@ -5,7 +5,7 @@ import 'package:recbooks/screens/login/login.dart';
 import 'package:recbooks/states/current_user.dart';
 
 enum AuthStatus {
-  notLogedIn,
+  notLoggedIn,
   loggedIn,
 }
 
@@ -17,7 +17,7 @@ class OurRoot extends StatefulWidget {
 }
 
 class _OurRootState extends State<OurRoot> {
-  AuthStatus _authStatus = AuthStatus.notLogedIn;
+  AuthStatus _authStatus = AuthStatus.notLoggedIn;
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();

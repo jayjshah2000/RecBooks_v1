@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:recbooks/screens/home/home.dart';
+// import 'package:recbooks/screens/home/home.dart';
+import 'package:recbooks/screens/root/root.dart';
 import 'package:recbooks/states/current_user.dart';
 import 'package:recbooks/widgets/our_container.dart';
 
@@ -25,8 +26,8 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
     try {
       String _returnString = await _currentUser.signUpUser(email, password, fullName);
       if (_returnString == "Success") {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+        Navigator
+            .pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const OurRoot()), (route) => false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(_returnString),

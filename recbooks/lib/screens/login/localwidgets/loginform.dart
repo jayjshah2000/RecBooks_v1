@@ -72,7 +72,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
   Widget build(BuildContext context) {
     return OurContainer(
         child: Column(
-      children: <Widget>[
+            children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 10, 8, 20),
           child: Text(
@@ -144,8 +144,14 @@ class _OurLoginFormState extends State<OurLoginForm> {
             ),
           ),
         ),
-        _googleButton(),
-      ],
-    ));
+        // const Center(
+        //   child: Text("OR"),
+        // ),
+        
+        const Center(child: Text("OR"),),
+        
+        Center(child: _googleButton()),
+            ],
+          ));
   }
 }
