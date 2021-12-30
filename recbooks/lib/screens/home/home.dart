@@ -22,25 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recbooks - Find your next read'),
-        backgroundColor: kMainColor,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              CurrentUser _currentUser = Provider.of(context, listen: false);
-              String _returnString = await _currentUser.signOut();
-              if (_returnString == "Success") {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const OurRoot()),
-                    (route) => false);
-              }
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
+      
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[

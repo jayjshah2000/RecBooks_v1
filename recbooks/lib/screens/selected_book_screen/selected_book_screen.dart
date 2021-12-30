@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recbooks/constants/color_constant.dart';
 import 'package:recbooks/models/book.dart';
+import 'package:recbooks/models/recommended_books.dart';
 // import 'package:recbooks/screens/home/home.dart';
 import 'package:recbooks/widgets/nav_bar.dart';
 
@@ -24,9 +25,13 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
         color: Colors.transparent,
         child: TextButton(
           // color: kMainColor,
+          style: TextButton.styleFrom(
+            // primary: kMainColor,
+            backgroundColor: kMainColor,
+          ),
           onPressed: () {},
           child: Text(
-            'Add to Library',
+            'Bookmark',
             style: GoogleFonts.openSans(
                 fontSize: 14, fontWeight: FontWeight.w600, color: kBlackColor),
           ),
@@ -112,47 +117,9 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                             fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w400),
-                      ),),
-              // Container(
-              //   height: 28,
-              //   margin: const EdgeInsets.only(top: 23, bottom: 36),
-              //   padding: const EdgeInsets.only(left: 25),
-              //   child: DefaultTabController(
-              //     length: 3,
-              //     child: TabBar(
-              //         labelPadding: const EdgeInsets.all(0),
-              //         indicatorPadding: const EdgeInsets.all(0),
-              //         isScrollable: true,
-              //         labelColor: kBlackColor,
-              //         unselectedLabelColor: kGreyColor,
-              //         labelStyle: GoogleFonts.openSans(
-              //             fontSize: 14, fontWeight: FontWeight.w700),
-              //         unselectedLabelStyle: GoogleFonts.openSans(
-              //             fontSize: 14, fontWeight: FontWeight.w600),
-              //         indicator: RoundedRectangleTabIndicator(
-              //             weight: 2, width: 30, color: kBlackColor),
-              //         tabs: [
-              //           Tab(
-              //             child: Container(
-              //               margin: const EdgeInsets.only(right: 39),
-              //               child: const Text('Description'),
-              //             ),
-              //           ),
-              //           Tab(
-              //             child: Container(
-              //               margin: const EdgeInsets.only(right: 39),
-              //               child: const Text('Reviews'),
-              //             ),
-              //           ),
-              //           Tab(
-              //             child: Container(
-              //               margin: const EdgeInsets.only(right: 39),
-              //               child: const Text('Similar'),
-              //             ),
-              //           )
-              //         ]),
-              //   ),
-              // ),
+                  ),
+              ),
+              
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
@@ -170,7 +137,92 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       fontWeight: FontWeight.w400),)
                   ],
                 )
-              )
+              ),
+          //     Container(
+          //   margin: const EdgeInsets.only(top: 21),
+          //   height: 240,
+          //   child: FutureBuilder(
+          //     future: getRecommendedBookData(widget.book.title),
+          //     builder: (context, AsyncSnapshot snapshot) {
+          //       if (snapshot.data == null) {
+          //         return const Center(
+          //           child: CircularProgressIndicator(
+          //             strokeWidth: 7.0,
+          //           ),
+          //         );
+          //       } else {
+          //         return ListView.builder(
+          //             padding: const EdgeInsets.only(left: 25, right: 6),
+          //             itemCount: snapshot.data.length,
+          //             physics: const BouncingScrollPhysics(),
+          //             scrollDirection: Axis.horizontal,
+          //             itemBuilder: (context, index) {
+          //               return Container(
+          //                 padding: const EdgeInsets.all(5),
+          //                 width: 150,
+          //                 height: 200,
+          //                 child: GestureDetector(
+          //                   onTap: (){
+          //                     Navigator.pushReplacement(
+          //                         context,
+          //                         MaterialPageRoute(
+          //                           builder: (context) => SelectedBookScreen(
+          //                               book: snapshot.data[index]),
+          //                         ),
+          //                       );
+          //                   },
+          //                   child: Column(
+          //                     children: [
+          //                       Card(
+          //                         elevation: 7,
+          //                         child: Container(
+          //                           height: 200,
+          //                           decoration: BoxDecoration(
+          //                             borderRadius: BorderRadius.circular(5),
+          //                             color: kGreyColor,
+          //                             image: DecorationImage(
+          //                               fit: BoxFit.fill,
+          //                               image: NetworkImage(
+          //                                   snapshot.data[index].imageUrl),
+          //                             ),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       const SizedBox(height: 5,),
+          //                       Expanded(
+          //                         child: Text(
+          //                           snapshot.data[index].title,
+          //                           overflow: TextOverflow.ellipsis,
+          //                           style: GoogleFonts.openSans(
+          //                             fontSize: 12,
+          //                             fontWeight: FontWeight.w600,
+          //                             color: kBlackColor
+          //                           ),
+          //                           textAlign: TextAlign.center,
+          //                         ),
+          //                       ),
+          //                       // Flexible(
+          //                       //     // fit: FlexFit.loose,
+          //                       //     child: RichText(
+          //                       //       overflow: TextOverflow.ellipsis,
+          //                       //       text: TextSpan(text: snapshot.data[index].title,
+          //                       //       style: GoogleFonts.openSans(
+          //                       //           fontSize: 10,
+          //                       //           fontWeight: FontWeight.w600,
+          //                       //           color: kBlackColor
+          //                       //         ),
+          //                       //       ),                                            
+          //                       //     ),
+          //                       // ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               );
+          //             });
+          //       }
+          //     },
+          //   ),
+          // ),
             ]))
           ],
         ),
