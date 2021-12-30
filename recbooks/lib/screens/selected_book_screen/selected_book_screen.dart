@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recbooks/constants/color_constant.dart';
 import 'package:recbooks/models/book.dart';
-import 'package:recbooks/screens/home/home.dart';
+// import 'package:recbooks/screens/home/home.dart';
+import 'package:recbooks/widgets/nav_bar.dart';
 
 class SelectedBookScreen extends StatefulWidget {
   final Book book;
@@ -50,7 +51,7 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
-                              context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                              context, MaterialPageRoute(builder: (context) => const OurNav()), (route) => false);
                         },
                         child: Container(
                           width: 32,

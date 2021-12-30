@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
-import 'package:recbooks/screens/home/home.dart';
+// import 'package:recbooks/screens/home/home.dart';
 import 'package:recbooks/screens/signup/signup.dart';
 import 'package:recbooks/states/current_user.dart';
+import 'package:recbooks/widgets/nav_bar.dart';
 import 'package:recbooks/widgets/our_container.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -49,7 +50,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
       if (_returnString == "Success") {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const OurNav()),
             (route) => false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recbooks/screens/home/home.dart';
+// import 'package:recbooks/screens/home/home.dart';
 import 'package:recbooks/screens/login/login.dart';
 import 'package:recbooks/states/current_user.dart';
+import 'package:recbooks/widgets/nav_bar.dart';
 
 enum AuthStatus {
   notLoggedIn,
@@ -38,7 +39,7 @@ class _OurRootState extends State<OurRoot> {
     Widget retVal;
 
     if (_authStatus == AuthStatus.loggedIn) {
-      retVal = const HomeScreen();
+      retVal = const OurNav();
     } else {
       retVal = const OurLogin();
     }
