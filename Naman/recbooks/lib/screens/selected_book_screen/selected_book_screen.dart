@@ -7,7 +7,6 @@ import 'package:recbooks/models/recommended_books.dart';
 // import 'package:recbooks/screens/home/home.dart';
 import 'package:recbooks/widgets/nav_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:open_url/open_url.dart';
 
 class SelectedBookScreen extends StatefulWidget {
   final Book book;

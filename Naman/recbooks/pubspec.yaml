@@ -39,7 +39,6 @@ dependencies:
   flutter_svg: ^1.0.0
   http: ^0.13.4
   url_launcher: ^6.0.17
-  open_url: ^2.0.0
   
 
 
