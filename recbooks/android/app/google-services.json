@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "364495680428",
-    "project_id": "recbooks-v1",
-    "storage_bucket": "recbooks-v1.appspot.com"
+    "project_number": "657899851763",
+    "project_id": "final-year-project-97ae3",
+    "storage_bucket": "final-year-project-97ae3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:364495680428:android:fb4716e05f4e8763518009",
+        "mobilesdk_app_id": "1:657899851763:android:e1cb74fd773f1551d18c86",
         "android_client_info": {
           "package_name": "com.example.recbooks"
         }
       },
       "oauth_client": [
         {
-          "client_id": "364495680428-b78qgef6hefeiq9hhmb76jl4m7d4kpgs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.recbooks",
-            "certificate_hash": "68431447f7283f586ffba52872170c68b2766545"
-          }
-        },
-        {
-          "client_id": "364495680428-7dkl5n97fba3fijmjjfkk812eqsucmin.apps.googleusercontent.com",
+          "client_id": "657899851763-9njlcjagsip5m0o18ce354qdrc3211l1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJM7PvK2Ue7XEP7qvjtUyXXwJHGnyncl4"
+          "current_key": "AIzaSyDExumr2PI22x2iZvwlfZ-jeSlS5FE0jF4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "364495680428-7dkl5n97fba3fijmjjfkk812eqsucmin.apps.googleusercontent.com",
+              "client_id": "657899851763-9njlcjagsip5m0o18ce354qdrc3211l1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

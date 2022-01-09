@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: const EdgeInsets.only(top: 21),
             height: 240,
             child: FutureBuilder(
-              future: getRandomBookData(),
+              future: getRandomBookData1(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {
                   return const Center(
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: const EdgeInsets.only(top: 10),
             // height: 210,
             child: FutureBuilder(
-                future: getRandomBookData(),
+                future: getRandomBookData2(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return const Center(

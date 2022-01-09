@@ -39,6 +39,13 @@ dependencies:
   flutter_svg: ^1.0.0
   http: ^0.13.4
   url_launcher: ^6.0.17
+#  autocomplete_textfield: ^1.6.4
+  flutter_typeahead: ^3.2.4
+  # flutter_barcode_scanner: ^2.0.0
+  autocomplete_textfield: ^1.7.3
+  # barcode_scan: ^3.0.1
+  barcode_scan2: ^4.2.0
+
   
 
 
@@ -74,6 +81,12 @@ flutter:
     - assets/google_logo.png
     - assets/icons/
     - assets/svg/
+    - assets/book_titles.txt
+    - assets/publisher.txt
+    - assets/book_author.txt
+    - assets/isbn_10.txt
+    - assets/isbn_13.txt
+    - assets/Category.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
