@@ -1,3 +1,5 @@
+// import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OurUser {
@@ -5,11 +7,13 @@ class OurUser {
   String? email;
   String? fullName;
   Timestamp? accountCreated;
+  List? likedBooks;
 
   OurUser({
     this.uid,
     this.email,
     this.fullName,
-    this.accountCreated, 
+    this.accountCreated,
+    this.likedBooks,
   });
 }

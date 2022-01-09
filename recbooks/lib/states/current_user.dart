@@ -18,12 +18,11 @@ class CurrentUser extends ChangeNotifier {
     String retVal = "Error";
     try {
       User? _firebaseUser = _auth.currentUser;
-      if(_firebaseUser != null){
+      if (_firebaseUser != null) {
         _currentUser = await OurDatabase().getUserInfo(_firebaseUser.uid);
+        // print(_currentUser.likedBooks);
         retVal = "Success";
       }
-      
-      
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -46,7 +45,7 @@ class CurrentUser extends ChangeNotifier {
       if (_returnString == "Success") {
         retVal = "Success";
       }
-      
+
       // retVal = "Success";
 
       // retVal = true;
@@ -68,7 +67,6 @@ class CurrentUser extends ChangeNotifier {
       // retVal = "Success";
       _currentUser = await OurDatabase().getUserInfo(_authResult.user!.uid);
       retVal = "Success";
-
     } catch (e) {
       retVal = e.toString();
     }
