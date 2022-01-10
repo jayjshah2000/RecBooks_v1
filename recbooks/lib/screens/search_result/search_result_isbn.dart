@@ -21,13 +21,8 @@ import 'package:recbooks/widgets/nav_bar.dart';
 
 class SearchResult extends StatefulWidget {
   final isbn_13;
-
   var queryParameters;
   SearchResult({Key? key, this.isbn_13}) : super(key: key);
-
-  // get queryParameters => null;
-  
-  // final String isbn_13;
 
   @override
   _SearchResultState createState() => _SearchResultState();
@@ -39,63 +34,40 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     // CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-
     return Scaffold(
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          // Positioned(
-          //           left: 25,
-          //           top: 35,
-          //           child: GestureDetector(
-          //             onTap: () {
-          //               Navigator.pushAndRemoveUntil(
-          //                   context,
-          //                   MaterialPageRoute(
-          //                       builder: (context) => const OurNav()),
-          //                   (route) => false);
-          //             },
-          //             child: Container(
-          //               width: 32,
-          //               height: 32,
-          //               decoration: BoxDecoration(
-          //                   borderRadius: BorderRadius.circular(5),
-          //                   color: kWhiteColor),
-          //               child: SvgPicture.asset(
-          //                   'assets/icons/icon_back_arrow.svg'),
-          //             ),
-          //           ),
-          //         ),
           SizedBox(
-                // color: Color(popularBookModel.color),
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      left: 25,
-                      top: 35,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Search()),
-                              (route) => false);
-                        },
-                        child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: kWhiteColor),
-                          child: SvgPicture.asset(
-                              'assets/icons/icon_back_arrow.svg'),
-                        ),
-                      ),
+            // color: Color(popularBookModel.color),
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  left: 25,
+                  top: 35,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Search()),
+                          (route) => false);
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: kWhiteColor),
+                      child:
+                          SvgPicture.asset('assets/icons/icon_back_arrow.svg'),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 25, top: 0),
             child: Text(
@@ -106,32 +78,30 @@ class _SearchResultState extends State<SearchResult> {
                   color: kBlackColor),
             ),
           ),
+
           Container(
-            margin: const EdgeInsets.only(top: 21),
-            height: 240,
+            margin: const EdgeInsets.only(top: 10),
+            // height: 210,
             child: FutureBuilder(
-              // print(),
-              future: getISBN13Search(widget.isbn_13),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 7.0,
-                    ),
-                  );
-                } else {
-                  return ListView.builder(
-                      padding: const EdgeInsets.only(left: 25, right: 6),
-                      itemCount: snapshot.data.length,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 150,
-                          height: 200,
-                          child: GestureDetector(
+                future: getISBN13Search(widget.isbn_13),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 7.0,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                        padding: const EdgeInsets.only(
+                            top: 25, right: 25, left: 25),
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
                             onTap: () {
+                              // print('ListView Tapped');
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -140,58 +110,76 @@ class _SearchResultState extends State<SearchResult> {
                                 ),
                               );
                             },
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 7,
-                                  child: Container(
-                                    height: 200,
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              height: 120,
+                              width: MediaQuery.of(context).size.width - 50,
+                              color: kBackgroundColor,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 100,
+                                    width: 62,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: kGreyColor,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            snapshot.data[index].imageUrl),
-                                      ),
+                                        borderRadius:
+                                            BorderRadius.circular(5),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              snapshot.data[index].imageUrl),
+                                        ),
+                                        color: kMainColor),
+                                  ),
+                                  const SizedBox(
+                                    width: 21,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Flexible(
+                                          child: RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            text: TextSpan(text: snapshot.data[index].title,
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600,
+                                                color: kBlackColor),),
+                                            
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          "Category: "+snapshot.data[index].category,
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight. w600,
+                                              color: kGreyColor),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          "By "+snapshot.data[index].author,
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: kGreyColor),
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    snapshot.data[index].title,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.openSans(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: kBlackColor),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                // Flexible(
-                                //     // fit: FlexFit.loose,
-                                //     child: RichText(
-                                //       overflow: TextOverflow.ellipsis,
-                                //       text: TextSpan(text: snapshot.data[index].title,
-                                //       style: GoogleFonts.openSans(
-                                //           fontSize: 10,
-                                //           fontWeight: FontWeight.w600,
-                                //           color: kBlackColor
-                                //         ),
-                                //       ),
-                                //     ),
-                                // ),
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      });
-                }
-              },
-            ),
+                          );
+                        });
+                  }
+                }),
           ),
         ],
       ),

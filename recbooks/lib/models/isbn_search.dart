@@ -9,7 +9,7 @@ Future getISBN13Search(String isbn_13) async {
   };
   print("\n\n\n\ninside isbn search"+isbn_13);
   var response = await http.get(Uri.https(
-      'namanshah0008.pythonanywhere.com', 'universalsearch', queryParameters));
+      'namanshah0008.pythonanywhere.com', 'isbn', queryParameters));
   if (response.statusCode == 200) {
     var jsonData = jsonDecode(response.body);
     print(jsonData);

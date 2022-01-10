@@ -53,31 +53,9 @@ class _SearchResultState extends State<SearchResultQuery> {
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          // Positioned(
-          //           left: 25,
-          //           top: 35,
-          //           child: GestureDetector(
-          //             onTap: () {
-          //               Navigator.pushAndRemoveUntil(
-          //                   context,
-          //                   MaterialPageRoute(
-          //                       builder: (context) => const OurNav()),
-          //                   (route) => false);
-          //             },
-          //             child: Container(
-          //               width: 32,
-          //               height: 32,
-          //               decoration: BoxDecoration(
-          //                   borderRadius: BorderRadius.circular(5),
-          //                   color: kWhiteColor),
-          //               child: SvgPicture.asset(
-          //                   'assets/icons/icon_back_arrow.svg'),
-          //             ),
-          //           ),
-          //         ),
           SizedBox(
             // color: Color(popularBookModel.color),
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.1,
             child: Stack(
               children: <Widget>[
                 Positioned(
@@ -115,93 +93,6 @@ class _SearchResultState extends State<SearchResultQuery> {
                   color: kBlackColor),
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.only(top: 21),
-          //   height: 240,
-          //   child: FutureBuilder(
-          //     // print(),
-          //     future: getBookSearch(widget.book_title, widget.book_author, widget.isbn, widget.Category),
-          //     builder: (context, AsyncSnapshot snapshot) {
-          //       if (snapshot.data == null) {
-          //         return const Center(
-          //           child: CircularProgressIndicator(
-          //             strokeWidth: 7.0,
-          //           ),
-          //         );
-          //       } else {
-          //         return ListView.builder(
-          //             padding: const EdgeInsets.only(left: 25, right: 6),
-          //             itemCount: snapshot.data.length,
-          //             physics: const BouncingScrollPhysics(),
-          //             scrollDirection: Axis.horizontal,
-          //             itemBuilder: (context, index) {
-          //               return Container(
-          //                 padding: const EdgeInsets.all(5),
-          //                 width: 150,
-          //                 height: 200,
-          //                 child: GestureDetector(
-          //                   onTap: () {
-          //                     Navigator.pushReplacement(
-          //                       context,
-          //                       MaterialPageRoute(
-          //                         builder: (context) => SelectedBookScreen(
-          //                             book: snapshot.data[index]),
-          //                       ),
-          //                     );
-          //                   },
-          //                   child: Column(
-          //                     children: [
-          //                       Card(
-          //                         elevation: 7,
-          //                         child: Container(
-          //                           height: 200,
-          //                           decoration: BoxDecoration(
-          //                             borderRadius: BorderRadius.circular(5),
-          //                             color: kGreyColor,
-          //                             image: DecorationImage(
-          //                               fit: BoxFit.fill,
-          //                               image: NetworkImage(
-          //                                   snapshot.data[index].imageUrl),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       const SizedBox(
-          //                         height: 5,
-          //                       ),
-          //                       Expanded(
-          //                         child: Text(
-          //                           snapshot.data[index].title,
-          //                           overflow: TextOverflow.ellipsis,
-          //                           style: GoogleFonts.openSans(
-          //                               fontSize: 12,
-          //                               fontWeight: FontWeight.w600,
-          //                               color: kBlackColor),
-          //                           textAlign: TextAlign.center,
-          //                         ),
-          //                       ),
-          //                       // Flexible(
-          //                       //     // fit: FlexFit.loose,
-          //                       //     child: RichText(
-          //                       //       overflow: TextOverflow.ellipsis,
-          //                       //       text: TextSpan(text: snapshot.data[index].title,
-          //                       //       style: GoogleFonts.openSans(
-          //                       //           fontSize: 10,
-          //                       //           fontWeight: FontWeight.w600,
-          //                       //           color: kBlackColor
-          //                       //         ),
-          //                       //       ),
-          //                       //     ),
-          //                       // ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //               );
-          //             });
-          //       }
-          //     },
-          //   ),
-          // ),
 
           Container(
             margin: const EdgeInsets.only(top: 10),
