@@ -7,6 +7,7 @@ import 'package:recbooks/models/book.dart';
 import 'package:recbooks/models/isbn_search.dart';
 import 'package:recbooks/screens/profile/profile.dart';
 import 'package:recbooks/screens/root/root.dart';
+import 'package:recbooks/screens/search_screen/search_page.dart';
 import 'package:recbooks/screens/selected_book_screen/selected_book_screen.dart';
 import 'package:recbooks/states/current_user.dart';
 
@@ -19,8 +20,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:recbooks/widgets/nav_bar.dart';
 
 class SearchResult extends StatefulWidget {
-  final String isbn_13;
-  const SearchResult({Key? key, required this.isbn_13}) : super(key: key);
+  final isbn_13;
+
+  var queryParameters;
+  SearchResult({Key? key, this.isbn_13}) : super(key: key);
+
+  // get queryParameters => null;
   
   // final String isbn_13;
 
@@ -39,30 +44,60 @@ class _SearchResultState extends State<SearchResult> {
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          Positioned(
-                    left: 25,
-                    top: 35,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OurNav()),
-                            (route) => false);
-                      },
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: kWhiteColor),
-                        child: SvgPicture.asset(
-                            'assets/icons/icon_back_arrow.svg'),
+          // Positioned(
+          //           left: 25,
+          //           top: 35,
+          //           child: GestureDetector(
+          //             onTap: () {
+          //               Navigator.pushAndRemoveUntil(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => const OurNav()),
+          //                   (route) => false);
+          //             },
+          //             child: Container(
+          //               width: 32,
+          //               height: 32,
+          //               decoration: BoxDecoration(
+          //                   borderRadius: BorderRadius.circular(5),
+          //                   color: kWhiteColor),
+          //               child: SvgPicture.asset(
+          //                   'assets/icons/icon_back_arrow.svg'),
+          //             ),
+          //           ),
+          //         ),
+          SizedBox(
+                // color: Color(popularBookModel.color),
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      left: 25,
+                      top: 35,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Search()),
+                              (route) => false);
+                        },
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: kWhiteColor),
+                          child: SvgPicture.asset(
+                              'assets/icons/icon_back_arrow.svg'),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
           Padding(
-            padding: const EdgeInsets.only(left: 25, top: 25),
+            padding: const EdgeInsets.only(left: 25, top: 0),
             child: Text(
               'Search Results',
               style: GoogleFonts.openSans(
@@ -75,6 +110,7 @@ class _SearchResultState extends State<SearchResult> {
             margin: const EdgeInsets.only(top: 21),
             height: 240,
             child: FutureBuilder(
+              // print(),
               future: getISBN13Search(widget.isbn_13),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {

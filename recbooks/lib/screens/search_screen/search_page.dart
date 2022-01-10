@@ -3,9 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:recbooks/constants/color_constant.dart';
+import 'package:recbooks/screens/bookmark/bookmark.dart';
+import 'package:recbooks/screens/home/home.dart';
 import 'package:recbooks/screens/profile/profile.dart';
 import 'package:recbooks/screens/root/root.dart';
-import 'package:recbooks/screens/search_result/search_result.dart';
+import 'package:recbooks/screens/search_result/search_result_isbn.dart';
+import 'package:recbooks/screens/search_result/search_result_query.dart';
 import 'package:recbooks/states/current_user.dart';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -27,11 +30,12 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+
   List<String> _suggestionListTitles = [];
 
   Future<List<String>> _loadTitles() async {
     List<String> suggestionListTitles = [];
-    await rootBundle.loadString('assets/book_titles.txt').then((q) {
+    await rootBundle.loadString('assets/book_title.txt').then((q) {
       for (String i in const LineSplitter().convert(q)) {
         suggestionListTitles.add(i);
       }
@@ -141,6 +145,31 @@ class _SearchState extends State<Search> {
   final TextEditingController _typeAheadControllerISBN13 =
       TextEditingController();
 
+// For Publisher,Publisher
+  List<String> _suggestionListPublisher = [];
+
+  Future<List<String>> _loadPublisher() async {
+    List<String> suggestionListPublisher = [];
+    await rootBundle.loadString('assets/publisher.txt').then((q) {
+      for (String i in const LineSplitter().convert(q)) {
+        suggestionListPublisher.add(i);
+      }
+    });
+    return suggestionListPublisher;
+  }
+
+  List<String> getSuggestionsPublisher(String query) {
+    List<String> matches = [];
+    matches.addAll(_suggestionListPublisher);
+    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+
+  final TextEditingController _typeAheadControllerPublisher =
+      TextEditingController();
+
+
+
   @override
   void initState() {
     _setup();
@@ -154,6 +183,7 @@ class _SearchState extends State<Search> {
     List<String> suggestionListCategory = await _loadCategory();
     List<String> suggestionListISBN10 = await _loadISBN10();
     List<String> suggestionListISBN13 = await _loadISBN13();
+    List<String> suggestionListPublisher = await _loadPublisher();
 
     // Notify the UI and display the questions
     setState(() {
@@ -162,6 +192,7 @@ class _SearchState extends State<Search> {
       _suggestionListCategory = suggestionListCategory;
       _suggestionListISBN10 = suggestionListISBN10;
       _suggestionListISBN13 = suggestionListISBN13;
+       _suggestionListPublisher = suggestionListPublisher;
     });
   }
 
@@ -199,6 +230,10 @@ class _SearchState extends State<Search> {
   // }
 
   String barcode = "";
+    String book_title = "";
+  String book_author = "";
+  String isbn = "";
+  String Category = "";
 
   Future barcodeScanning() async {
     try {
@@ -222,6 +257,28 @@ class _SearchState extends State<Search> {
     }
   }
 
+  // Future searchQuerying() async {
+  //   try {
+  //     ScanResult barcode = await BarcodeScanner.scan();
+  //     setState(() {
+  //       this.barcode = _navigateToDetail(barcode.rawContent);
+  //       // this.barcode = barcode.rawContent;
+  //     });
+  //   } on PlatformException catch (e) {
+  //     if (e.code == BarcodeScanner.cameraAccessDenied) {
+  //       setState(() {
+  //         barcode = 'No camera permission!';
+  //       });
+  //     } else {
+  //       setState(() => barcode = 'Unknown error: $e');
+  //     }
+  //   } on FormatException {
+  //     setState(() => barcode = 'Nothing captured.');
+  //   } catch (e) {
+  //     setState(() => barcode = 'Unknown error: $e');
+  //   }
+  // }
+
 
   // _navigateToDetail(String title, String author, String category, String isbn10, String isbn13) async {
   //   final result = await Navigator.push(
@@ -235,12 +292,16 @@ class _SearchState extends State<Search> {
   //   }
   // }
 
-  _navigateToDetail(String isbn_13) async {
+
+// navigation for barcode
+  _navigateToDetail(var isbn_13) async {
+    // var string_to_pass = {'isbn':isbn_13};
+
     final result = await Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SearchResult(isbn_13:isbn_13),
-                                  ),
+                                    builder: (context) => SearchResult(isbn_13 :isbn_13),
+                                    ),
                                 );
     if (result != null) {
       setState(() {
@@ -250,18 +311,113 @@ class _SearchState extends State<Search> {
     }
   }
 
+
+
+
+// Navigation for normal search
+  _navigateToQuery() async {
+    // var string_to_pass = {'isbn':isbn_13};
+
+    final result = await Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchResultQuery(book_author: book_author, book_title: book_title, Category: Category),
+                                    ),
+                                );
+    if (result != null) {
+      setState(() {
+        print(result);
+        // _isbn_13 = result;
+      });
+    }
+  }
+
+
+
+
+// // Bottom Nav bar
+// int _selectedIndex = 0;
+//   static const List<Widget> _widgetOptions = <Widget>[
+//     HomeScreen(),
+//     Bookmark(),
+//     Search(),
+//     Profile(),
+//   ];
+
+//   void _onItemTap(int index) {
+//     setState(() {
+//       _selectedIndex = index;
+//     });
+//   }
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     // CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
     return Scaffold(
+      // bottomNavigationBar: BottomNavigationBar(
+      //   unselectedItemColor: Colors.grey,
+      //   selectedItemColor: kMainColor,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.bookmark),
+      //       label: 'Bookmarked',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search),
+      //       label: 'Adv Search',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Profile',
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onItemTap,
+      //   // onTap: (int index){_selectedTab(pageKeys[index]) = index;},
+      // ),
       // bottomNavigationBar: OurNavigationBar(),
       body: ListView(
+        // reverse: true,
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
+          // Positioned(
+          //           left: 25,
+          //           top: 35,
+          //           child: GestureDetector(
+          //             onTap: () {
+          //               Navigator.pushAndRemoveUntil(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => const OurNav()),
+          //                   (route) => false);
+          //             },
+          //             child: Container(
+          //               width: 32,
+          //               height: 32,
+          //               decoration: BoxDecoration(
+          //                   borderRadius: BorderRadius.circular(5),
+          //                   color: kWhiteColor),
+          //               child: SvgPicture.asset(
+          //                   'assets/icons/icon_back_arrow.svg'),
+          //             ),
+          //           ),
+          //         ),
           Padding(
-              padding: const EdgeInsets.only(left: 25, top: 25, right: 25),
+              padding: const EdgeInsets.only(left: 25, right: 25),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Positioned(
@@ -288,28 +444,28 @@ class _SearchState extends State<Search> {
                   ),
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: <
                       Widget>[
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: barcodeScanning,
-                        child: const Text(
-                          "Capture Image",
-                          style: TextStyle(fontSize: 20, color: kBlackColor),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(kMainColor),
+                  //   Container(
+                  //     child: ElevatedButton(
+                  //       onPressed: barcodeScanning,
+                  //       child: const Text(
+                  //         "Capture Image",
+                  //         style: TextStyle(fontSize: 20, color: kBlackColor),
+                  //       ),
+                  //       style: ButtonStyle(
+                  //         backgroundColor: MaterialStateProperty.all<Color>(kMainColor),
                           
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(10.0),
-                      margin: const EdgeInsets.all(10),
-                    ),
-                   Container(
-                      padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                    ),
-                    Text(
-                      barcode,
-                      style: const TextStyle(fontSize: 25, color: kBlackColor),
-                    ),
+                  //       ),
+                  //     ),
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     margin: const EdgeInsets.all(10),
+                  //   ),
+                  //  Container(
+                  //     padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                  //   ),
+                  //   Text(
+                  //     barcode,
+                  //     style: const TextStyle(fontSize: 25, color: kBlackColor),
+                  //   ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
@@ -351,7 +507,8 @@ class _SearchState extends State<Search> {
                       },
                       onSuggestionSelected: (suggestion) {
                         _typeAheadControllerTitles.text = suggestion.toString();
-                        queryParameters['title'] = suggestion.toString();
+                        book_title = suggestion.toString();
+                        // queryParameters['title'] = suggestion.toString();
                       },
                     ),
                     Container(
@@ -383,6 +540,7 @@ class _SearchState extends State<Search> {
                       },
                       onSuggestionSelected: (suggestion) {
                         _typeAheadControllerAuthor.text = suggestion.toString();
+                        book_author = suggestion.toString();
                         queryParameters['author'] = suggestion.toString();
                       },
                     ),
@@ -416,7 +574,41 @@ class _SearchState extends State<Search> {
                       onSuggestionSelected: (suggestion) {
                         _typeAheadControllerCategory.text =
                             suggestion.toString();
+                            Category = suggestion.toString();
                         queryParameters['category'] = suggestion.toString();
+                      },
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                    ),
+                    // Type Ahead for Authors
+                    TypeAheadField(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        autofocus: false,
+                        style: GoogleFonts.openSans(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: kBlackColor),
+                        decoration: InputDecoration(
+                          labelText: 'Publisher',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        controller: _typeAheadControllerPublisher,
+                      ),
+                      suggestionsCallback: (pattern) async {
+                        return getSuggestionsPublisher(pattern.toString());
+                      },
+                      itemBuilder: (context, suggestion) {
+                        return ListTile(
+                          title: Text(suggestion.toString()),
+                        );
+                      },
+                      onSuggestionSelected: (suggestion) {
+                        _typeAheadControllerPublisher.text = suggestion.toString();
+                        book_author = suggestion.toString();
+                        queryParameters['publisher'] = suggestion.toString();
                       },
                     ),
                     Container(
@@ -428,9 +620,7 @@ class _SearchState extends State<Search> {
                         // primary: kMainColor,
                         backgroundColor: kMainColor,
                       ),
-                      onPressed: () {
-                        print(queryParameters);
-                      },
+                      onPressed: _navigateToQuery,
                       child: Text(
                         'Search',
                         style: GoogleFonts.openSans(
@@ -444,72 +634,101 @@ class _SearchState extends State<Search> {
                     Container(
                       padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
                     ),
-                    // Type Ahead for ISBN 10
-                    TypeAheadField(
-                      textFieldConfiguration: TextFieldConfiguration(
-                        autofocus: false,
-                        style: GoogleFonts.openSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: kBlackColor),
-                        decoration: InputDecoration(
-                          labelText: 'ISBN 10',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        controller: _typeAheadControllerISBN10,
-                      ),
-                      suggestionsCallback: (pattern) async {
-                        return getSuggestionsISBN10(pattern.toString());
-                      },
-                      itemBuilder: (context, suggestion) {
-                        return ListTile(
-                          title: Text(suggestion.toString()),
-                        );
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        _typeAheadControllerISBN10.text = suggestion.toString();
-                        queryParameters['isbn_10'] = suggestion.toString();
-                      },
+                    Text(
+                      'OR',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: kBlackColor),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
                     ),
-                    // Type Ahead for ISBN 10
-                    TypeAheadField(
-                      textFieldConfiguration: TextFieldConfiguration(
-                        autofocus: false,
-                        style: GoogleFonts.openSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: kBlackColor),
-                        decoration: InputDecoration(
-                          labelText: 'ISBN 13',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                    Container(
+                      child: ElevatedButton(
+                        onPressed: barcodeScanning,
+                        child: const Text(
+                          "Scan ISBN BarCode",
+                          style: TextStyle(fontSize: 20, color: kBlackColor),
                         ),
-                        controller: _typeAheadControllerISBN13,
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(kMainColor),
+                          
+                        ),
                       ),
-                      suggestionsCallback: (pattern) async {
-                        return getSuggestionsISBN13(pattern.toString());
-                      },
-                      itemBuilder: (context, suggestion) {
-                        return ListTile(
-                          title: Text(suggestion.toString()),
-                        );
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        _typeAheadControllerISBN13.text = suggestion.toString();
-                        queryParameters['isbn_13'] = suggestion.toString();
-                      },
+                      // padding: const EdgeInsets.all(10.0),
+                      // margin: const EdgeInsets.all(10),
                     ),
+                   Container(
+                      padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                    ),
+                    // // Type Ahead for ISBN 10
+                    // TypeAheadField(
+                    //   textFieldConfiguration: TextFieldConfiguration(
+                    //     autofocus: false,
+                    //     style: GoogleFonts.openSans(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w600,
+                    //         color: kBlackColor),
+                    //     decoration: InputDecoration(
+                    //       labelText: 'ISBN 10',
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //     ),
+                    //     controller: _typeAheadControllerISBN10,
+                    //   ),
+                    //   suggestionsCallback: (pattern) async {
+                    //     return getSuggestionsISBN10(pattern.toString());
+                    //   },
+                    //   itemBuilder: (context, suggestion) {
+                    //     return ListTile(
+                    //       title: Text(suggestion.toString()),
+                    //     );
+                    //   },
+                    //   onSuggestionSelected: (suggestion) {
+                    //     _typeAheadControllerISBN10.text = suggestion.toString();
+                    //     queryParameters['isbn_10'] = suggestion.toString();
+                    //   },
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                    // ),
+                    // // Type Ahead for ISBN 10
+                    // TypeAheadField(
+                    //   textFieldConfiguration: TextFieldConfiguration(
+                    //     autofocus: false,
+                    //     style: GoogleFonts.openSans(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w600,
+                    //         color: kBlackColor),
+                    //     decoration: InputDecoration(
+                    //       labelText: 'ISBN 13',
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //     ),
+                    //     controller: _typeAheadControllerISBN13,
+                    //   ),
+                    //   suggestionsCallback: (pattern) async {
+                    //     return getSuggestionsISBN13(pattern.toString());
+                    //   },
+                    //   itemBuilder: (context, suggestion) {
+                    //     return ListTile(
+                    //       title: Text(suggestion.toString()),
+                    //     );
+                    //   },
+                    //   onSuggestionSelected: (suggestion) {
+                    //     _typeAheadControllerISBN13.text = suggestion.toString();
+                    //     queryParameters['isbn_13'] = suggestion.toString();
+                    //   },
+                    // ),
                   ]),
                 ],
               )),
         ],
       ),
+
     );
   }
 }
