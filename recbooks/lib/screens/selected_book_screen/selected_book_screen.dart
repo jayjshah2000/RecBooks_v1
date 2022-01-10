@@ -162,7 +162,7 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                 delegate: SliverChildListDelegate([
               Padding(
                 padding: const EdgeInsets.only(top: 24, left: 25, right: 25),
-                child: Text(
+                child: SelectableText(
                   widget.book.title,
                   style: GoogleFonts.openSans(
                       fontSize: 27,
@@ -179,6 +179,47 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       color: kGreyColor,
                       fontWeight: FontWeight.w400),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 7, left: 25),
+                child: SelectableText.rich(
+                  TextSpan(
+                    text:'ISBN 10:  ',
+                    style: GoogleFonts.openSans(
+                      fontSize: 14,
+                      color: kBlackColor,
+                      fontWeight: FontWeight.w400),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.book.isbn_10,
+                        style: GoogleFonts.openSans(
+                      fontSize: 14,
+                      color: kGreyColor,
+                      fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ) ,     
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 7, left: 25),
+                child: SelectableText.rich(
+                  TextSpan(
+                    text:'ISBN 13:  ',
+                    style: GoogleFonts.openSans(
+                      fontSize: 14,
+                      color: kBlackColor,
+                      fontWeight: FontWeight.w400),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.book.isbn_13,
+                        style: GoogleFonts.openSans(
+                      fontSize: 14,
+                      color: kGreyColor,
+                      fontWeight: FontWeight.w400),
+                      ),
+                      ],),
+                ) ,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
