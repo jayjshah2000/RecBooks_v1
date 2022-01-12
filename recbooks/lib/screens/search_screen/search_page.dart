@@ -19,8 +19,9 @@ import 'dart:convert';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:recbooks/widgets/nav_bar.dart';
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:barcode_scan2/barcode_scan2.dart';
 // import 'package:barcode_scan2/barcode_scan2.dart';
+// import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -30,7 +31,6 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-
   List<String> _suggestionListTitles = [];
 
   Future<List<String>> _loadTitles() async {
@@ -168,8 +168,6 @@ class _SearchState extends State<Search> {
   final TextEditingController _typeAheadControllerPublisher =
       TextEditingController();
 
-
-
   @override
   void initState() {
     _setup();
@@ -192,117 +190,56 @@ class _SearchState extends State<Search> {
       _suggestionListCategory = suggestionListCategory;
       _suggestionListISBN10 = suggestionListISBN10;
       _suggestionListISBN13 = suggestionListISBN13;
-       _suggestionListPublisher = suggestionListPublisher;
+      _suggestionListPublisher = suggestionListPublisher;
     });
   }
 
   final queryParameters = {};
 
-  //
-  //
   // // isbn barcode codes
-  // Future<void> startBarcodeScanStream() async {
-  //   FlutterBarcodeScanner.getBarcodeStreamReceiver(
-  //       '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
-  //       .listen((barcode) => print(barcode));
-  // }
-
-  // // Platform messages are asynchronous, so we initialize in an async method.
-  // Future<void> scanBarcodeNormal() async {
-  //   String barcodeScanRes;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-  //         '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-  //     print(barcodeScanRes);
-  //   } on PlatformException {
-  //     barcodeScanRes = 'Failed to get platform version.';
-  //   }
-  //
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-  //
-  //   setState(() {
-  //     _scanBarcode = barcodeScanRes;
-  //   });
-  // }
+  
 
   String barcode = "";
-    String book_title = "";
+  String book_title = "";
   String book_author = "";
   String isbn = "";
   String Category = "";
 
-  Future barcodeScanning() async {
+
+  // ISBN Bar code scanner
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      ScanResult barcode = await BarcodeScanner.scan();
-      setState(() {
-        this.barcode = _navigateToDetail(barcode.rawContent);
-        // this.barcode = barcode.rawContent;
-      });
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.cameraAccessDenied) {
-        setState(() {
-          barcode = 'No camera permission!';
-        });
-      } else {
-        setState(() => barcode = 'Unknown error: $e');
-      }
-    } on FormatException {
-      setState(() => barcode = 'Nothing captured.');
-    } catch (e) {
-      setState(() => barcode = 'Unknown error: $e');
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+      _navigateToDetail(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
     }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      print(barcodeScanRes);
+      // _scanBarcode = barcodeScanRes;
+    });
   }
-
-  // Future searchQuerying() async {
-  //   try {
-  //     ScanResult barcode = await BarcodeScanner.scan();
-  //     setState(() {
-  //       this.barcode = _navigateToDetail(barcode.rawContent);
-  //       // this.barcode = barcode.rawContent;
-  //     });
-  //   } on PlatformException catch (e) {
-  //     if (e.code == BarcodeScanner.cameraAccessDenied) {
-  //       setState(() {
-  //         barcode = 'No camera permission!';
-  //       });
-  //     } else {
-  //       setState(() => barcode = 'Unknown error: $e');
-  //     }
-  //   } on FormatException {
-  //     setState(() => barcode = 'Nothing captured.');
-  //   } catch (e) {
-  //     setState(() => barcode = 'Unknown error: $e');
-  //   }
-  // }
-
-
-  // _navigateToDetail(String title, String author, String category, String isbn10, String isbn13) async {
-  //   final result = await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => DetailPage(title, author, category, isbn10, isbn13)),
-  //   );
-  //   if (result != null) {
-  //     setState(() {
-  //       _title = result;
-  //     });
-  //   }
-  // }
-
 
 // navigation for barcode
   _navigateToDetail(var isbn_13) async {
     // var string_to_pass = {'isbn':isbn_13};
 
     final result = await Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchResult(isbn_13 :isbn_13),
-                                    ),
-                                );
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchResult(isbn_13: isbn_13),
+      ),
+    );
     if (result != null) {
       setState(() {
         print(isbn_13);
@@ -311,19 +248,19 @@ class _SearchState extends State<Search> {
     }
   }
 
-
-
-
 // Navigation for normal search
   _navigateToQuery() async {
     // var string_to_pass = {'isbn':isbn_13};
 
     final result = await Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchResultQuery(book_author: book_author, book_title: book_title, Category: Category),
-                                    ),
-                                );
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchResultQuery(
+            book_author: book_author,
+            book_title: book_title,
+            Category: Category),
+      ),
+    );
     if (result != null) {
       setState(() {
         print(result);
@@ -331,9 +268,6 @@ class _SearchState extends State<Search> {
       });
     }
   }
-
-
-
 
 // // Bottom Nav bar
 // int _selectedIndex = 0;
@@ -350,12 +284,7 @@ class _SearchState extends State<Search> {
 //     });
 //   }
 
-
-
-
-
-
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -392,28 +321,6 @@ class _SearchState extends State<Search> {
         // reverse: true,
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
-          // Positioned(
-          //           left: 25,
-          //           top: 35,
-          //           child: GestureDetector(
-          //             onTap: () {
-          //               Navigator.pushAndRemoveUntil(
-          //                   context,
-          //                   MaterialPageRoute(
-          //                       builder: (context) => const OurNav()),
-          //                   (route) => false);
-          //             },
-          //             child: Container(
-          //               width: 32,
-          //               height: 32,
-          //               decoration: BoxDecoration(
-          //                   borderRadius: BorderRadius.circular(5),
-          //                   color: kWhiteColor),
-          //               child: SvgPicture.asset(
-          //                   'assets/icons/icon_back_arrow.svg'),
-          //             ),
-          //           ),
-          //         ),
           Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: Column(
@@ -444,28 +351,6 @@ class _SearchState extends State<Search> {
                   ),
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: <
                       Widget>[
-                  //   Container(
-                  //     child: ElevatedButton(
-                  //       onPressed: barcodeScanning,
-                  //       child: const Text(
-                  //         "Capture Image",
-                  //         style: TextStyle(fontSize: 20, color: kBlackColor),
-                  //       ),
-                  //       style: ButtonStyle(
-                  //         backgroundColor: MaterialStateProperty.all<Color>(kMainColor),
-                          
-                  //       ),
-                  //     ),
-                  //     padding: const EdgeInsets.all(10.0),
-                  //     margin: const EdgeInsets.all(10),
-                  //   ),
-                  //  Container(
-                  //     padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                  //   ),
-                  //   Text(
-                  //     barcode,
-                  //     style: const TextStyle(fontSize: 25, color: kBlackColor),
-                  //   ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Text(
@@ -476,7 +361,6 @@ class _SearchState extends State<Search> {
                             color: kBlackColor),
                       ),
                     ),
-                    
 
                     Container(
                       padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
@@ -574,7 +458,7 @@ class _SearchState extends State<Search> {
                       onSuggestionSelected: (suggestion) {
                         _typeAheadControllerCategory.text =
                             suggestion.toString();
-                            Category = suggestion.toString();
+                        Category = suggestion.toString();
                         queryParameters['category'] = suggestion.toString();
                       },
                     ),
@@ -606,7 +490,8 @@ class _SearchState extends State<Search> {
                         );
                       },
                       onSuggestionSelected: (suggestion) {
-                        _typeAheadControllerPublisher.text = suggestion.toString();
+                        _typeAheadControllerPublisher.text =
+                            suggestion.toString();
                         book_author = suggestion.toString();
                         queryParameters['publisher'] = suggestion.toString();
                       },
@@ -646,20 +531,20 @@ class _SearchState extends State<Search> {
                     ),
                     Container(
                       child: ElevatedButton(
-                        onPressed: barcodeScanning,
+                        onPressed: scanBarcodeNormal,
                         child: const Text(
                           "Scan ISBN BarCode",
                           style: TextStyle(fontSize: 20, color: kBlackColor),
                         ),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(kMainColor),
-                          
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(kMainColor),
                         ),
                       ),
                       // padding: const EdgeInsets.all(10.0),
                       // margin: const EdgeInsets.all(10),
                     ),
-                   Container(
+                    Container(
                       padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
                     ),
                     // // Type Ahead for ISBN 10
@@ -728,7 +613,6 @@ class _SearchState extends State<Search> {
               )),
         ],
       ),
-
     );
   }
 }

@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.3"
-  barcode_scan2:
-    dependency: "direct main"
-    description:
-      name: barcode_scan2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -169,18 +162,18 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.3"
-  fixnum:
-    dependency: transitive
-    description:
-      name: fixnum
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_barcode_scanner:
+    dependency: "direct main"
+    description:
+      name: flutter_barcode_scanner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -209,6 +202,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.2"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   flutter_signin_button:
     dependency: "direct main"
     description:
@@ -429,13 +429,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   provider:
     dependency: "direct main"
     description:
