@@ -47,42 +47,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               )),
-          Container(
-            height: 39,
-            margin: const EdgeInsets.only(left: 25, right: 25, top: 18),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: kLightGreyColor),
-            child: Stack(
-              children: <Widget>[
-                TextField(
-                  style: GoogleFonts.openSans(
-                      fontSize: 12,
-                      color: kBlackColor,
-                      fontWeight: FontWeight.w600),
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(
-                          left: 19, right: 50, bottom: 8),
-                      border: InputBorder.none,
-                      hintText: 'Search book..',
-                      hintStyle: GoogleFonts.openSans(
-                          fontSize: 12,
-                          color: kGreyColor,
-                          fontWeight: FontWeight.w600)),
-                ),
-                Positioned(
-                  right: 0,
-                  child: SvgPicture.asset('assets/svg/background_search.svg'),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 9,
-                  child:
-                      SvgPicture.asset('assets/icons/icon_search_white.svg'),
-                )
-              ],
-            ),
-          ),
+          // Container(
+          //   height: 39,
+          //   margin: const EdgeInsets.only(left: 25, right: 25, top: 18),
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: kLightGreyColor),
+          //   child: Stack(
+          //     children: <Widget>[
+          //       TextField(
+          //         style: GoogleFonts.openSans(
+          //             fontSize: 12,
+          //             color: kBlackColor,
+          //             fontWeight: FontWeight.w600),
+          //         decoration: InputDecoration(
+          //             contentPadding: const EdgeInsets.only(
+          //                 left: 19, right: 50, bottom: 8),
+          //             border: InputBorder.none,
+          //             hintText: 'Search book..',
+          //             hintStyle: GoogleFonts.openSans(
+          //                 fontSize: 12,
+          //                 color: kGreyColor,
+          //                 fontWeight: FontWeight.w600)),
+          //       ),
+          //       Positioned(
+          //         right: 0,
+          //         child: SvgPicture.asset('assets/svg/background_search.svg'),
+          //       ),
+          //       Positioned(
+          //         top: 8,
+          //         right: 9,
+          //         child:
+          //             SvgPicture.asset('assets/icons/icon_search_white.svg'),
+          //       )
+          //     ],
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.only(left: 25, top: 25),
             child: Text(
