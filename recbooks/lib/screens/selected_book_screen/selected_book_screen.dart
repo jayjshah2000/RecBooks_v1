@@ -70,17 +70,20 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(returnString)));
               },
-              child: Text(
-                'Bookmark',
-                style: GoogleFonts.openSans(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: kBlackColor),
-              ),
+              child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: kMainColor),
+                          child: SvgPicture.asset(
+                              'assets/icons/Like-Icon-iuhds.svg'),
+                        ),
               // shape:
               //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
           ),
+          
           // SizedBox(width: 55),
           Container(
             margin: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
@@ -94,13 +97,22 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                 backgroundColor: kMainColor,
               ),
               onPressed: () => launchURL(_url),
-              child: Text(
-                'Buy on Amazon',
-                style: GoogleFonts.openSans(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: kBlackColor),
-              ),
+              // child: Text(
+              //   'Buy on Amazon',
+              //   style: GoogleFonts.openSans(
+              //       fontSize: 20,
+              //       fontWeight: FontWeight.w600,
+              //       color: kBlackColor),
+              // ),
+              child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: kMainColor),
+                          child: SvgPicture.asset(
+                              'assets/icons/amazon-icon.svg'),
+                        ),
               // shape:
               //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
@@ -252,13 +264,74 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       )
                     ],
                   )),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                      margin: const EdgeInsets.only(left: 15, right: 5, bottom: 25),
+                      height: 49,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      color: Colors.transparent,
+                      child: TextButton(
+                        // color: kMainColor,
+                        style: TextButton.styleFrom(
+                          // primary: kMainColor,
+                          backgroundColor: kMainColor,
+                        ),
+                        onPressed: () async {
+                          returnString = await db
+                              .addAuthorToDatabase(
+                            _currentUser.getCurrentUser.uid, widget.book.author);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(returnString)));
+                  },
+                  child: Text(
+                    'Like Author',
+                    style: GoogleFonts.openSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: kBlackColor),
+                  ),
+                  // shape:
+                  //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 15, right: 5, bottom: 25),
+                height: 49,
+                width: MediaQuery.of(context).size.width * 0.45,
+                color: Colors.transparent,
+                child: TextButton(
+                  // color: kMainColor,
+                  style: TextButton.styleFrom(
+                    // primary: kMainColor,
+                    backgroundColor: kMainColor,
+                  ),
+                  onPressed: () async {
+                    returnString = await db
+                        .addGenreToDatabase(
+                            _currentUser.getCurrentUser.uid, widget.book.category);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(returnString)));
+                  },
+                  child: Text(
+                    ' Like Genre',
+                    style: GoogleFonts.openSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: kBlackColor),
+                  ),
+                  // shape:
+                  //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                ),],
+                  ),
               Padding(
                   padding: const EdgeInsets.all(25),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Recommend 1",
+                      Text("Books you may like",
                           style: GoogleFonts.openSans(
                               fontSize: 20,
                               color: kBlackColor,
@@ -366,7 +439,7 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Recommend 2",
+                      Text("User who also read",
                           style: GoogleFonts.openSans(
                               fontSize: 20,
                               color: kBlackColor,

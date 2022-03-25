@@ -43,6 +43,8 @@ class OurDatabase {
     return retVal;
   }
 
+
+  // Bookmarking or liking a book
   Future<String> addBookToBookmark(String? uid, String title) async {
     String retVal = "Error";
     try {
@@ -77,6 +79,87 @@ class OurDatabase {
       // ignore: avoid_print
       print(e);
     }
+    // print("\n\n\n\n\n\n\n\n\n" + retVal.toString()+"\n\n\n\n\n\n\n\n\n");
+    return retVal;
+  }
+
+
+  // for adding and retrieving Fav authors
+  Future<String> addAuthorToDatabase(String? uid, String title) async {
+    String retVal = "Error";
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      List toBeAdded = _docSnapshot.get("favAuthor");
+      if (toBeAdded.contains(title)) {
+        retVal = "Author already liked";
+      } else {
+        toBeAdded.add(title);
+        _firestore
+            .collection("users")
+            .doc(uid)
+            .update({"favAuthor": toBeAdded});
+        retVal = "Author added successfully";
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
+  }
+
+
+  Future getFavAuthors(String? uid) async {
+    var retVal = [];
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      retVal = _docSnapshot.get("favAuthor");
+      // retVal.likedBooks = _docSnapshot.get("likedBooks");
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    print("\n\n\n\n\n\n\n\n\n" + retVal.toString()+"\n\n\n\n\n\n\n\n\n");
+    return retVal;
+  }
+
+  // for adding and retrieving Fav Genre
+  Future<String> addGenreToDatabase(String? uid, String title) async {
+    String retVal = "Error";
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      List toBeAdded = _docSnapshot.get("favGenre");
+      if (toBeAdded.contains(title)) {
+        retVal = "Genre already liked";
+      } else {
+        toBeAdded.add(title);
+        _firestore
+            .collection("users")
+            .doc(uid)
+            .update({"favGenre": toBeAdded});
+        retVal = "Genre added successfully";
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
+  }
+
+  Future getFavGenre(String? uid) async {
+    var retVal = [];
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      retVal = _docSnapshot.get("favGenre");
+      // retVal.likedBooks = _docSnapshot.get("likedBooks");
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    // print("\n\n\n\n\n\n\n\n\n" + retVal.toString()+"\n\n\n\n\n\n\n\n\n");
     return retVal;
   }
 }

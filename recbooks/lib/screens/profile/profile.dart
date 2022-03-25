@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recbooks/constants/color_constant.dart';
 import 'package:recbooks/screens/root/root.dart';
 import 'package:recbooks/screens/search_screen/search_page.dart';
+import 'package:recbooks/services/database.dart';
 import 'package:recbooks/states/current_user.dart';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -93,26 +94,13 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-//   _setup() async {
-//     // Retrieve the questions (Processed in the background)
-//     List<String> suggestionListTitles = await _loadTitles();
-//     List<String> suggestionListAuthors = await _loadAuthors();
-//     List<String> suggestionListCategory = await _loadCategory();
-
-//     // Notify the UI and display the questions
-//     setState(() {
-//       _suggestionListTitles = suggestionListTitles;
-//       _suggestionListAuthors = suggestionListAuthors;
-//       _suggestionListCategory = suggestionListCategory;
-//     });
-//   }
-
   @override
   Widget build(BuildContext context) {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-
+    OurDatabase db = OurDatabase();
     return Scaffold(
       body: ListView(
+        
         physics: const BouncingScrollPhysics(),
         children: <Widget>[
           Padding(
@@ -134,104 +122,8 @@ class _ProfileState extends State<Profile> {
                         fontWeight: FontWeight.w600,
                         color: kBlackColor),
                   ),
-                  // Column(
-                  //     mainAxisAlignment: MainAxisAlignment.start,
-                  //     children: <Widget>[
-                  //       // Type Ahead for Titles
-                  //       TypeAheadField(
-                  //         textFieldConfiguration: TextFieldConfiguration(
-                  //           autofocus: true,
-                  //           style: GoogleFonts.openSans(
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.w600,
-                  //               color: kBlackColor),
-                  //           decoration: InputDecoration(
-                  //             labelText: 'Titles',
-                  //             border: OutlineInputBorder(
-                  //               borderRadius: BorderRadius.circular(10),
-                  //             ),
-                  //           ),
-                  //           controller: _typeAheadControllerTitles,
-                  //         ),
-                  //         suggestionsCallback: (pattern) async {
-                  //           return getSuggestionsTitles(pattern.toString());
-                  //         },
-                  //         itemBuilder: (context, suggestion) {
-                  //           return ListTile(
-                  //             title: Text(suggestion.toString()),
-                  //           );
-                  //         },
-                  //         onSuggestionSelected: (suggestion) {
-                  //           _typeAheadControllerTitles.text = suggestion.toString();
-                  //         },
-                  //       ),
-                  //       Container(
-                  //         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                  //       ),
-                  //     // Type Ahead for Authors
-                  //     TypeAheadField(
-                  //         textFieldConfiguration: TextFieldConfiguration(
-                  //           autofocus: true,
-                  //           style: GoogleFonts.openSans(
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.w600,
-                  //               color: kBlackColor),
-                  //           decoration: InputDecoration(
-                  //             labelText: 'Authors',
-                  //             border: OutlineInputBorder(
-                  //               borderRadius: BorderRadius.circular(10),
-                  //             ),
-                  //           ),
-                  //           controller: _typeAheadControllerAuthor,
-                  //         ),
-                  //         suggestionsCallback: (pattern) async {
-                  //           return getSuggestionsAuthors(pattern.toString());
-                  //         },
-                  //         itemBuilder: (context, suggestion) {
-                  //           return ListTile(
-                  //             title: Text(suggestion.toString()),
-                  //           );
-                  //         },
-                  //         onSuggestionSelected: (suggestion) {
-                  //           _typeAheadControllerAuthor.text = suggestion.toString();
-                  //         },
-                  //       ),
-                  //       Container(
-                  //         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                  //       ),
-                  //       // Typeahead for category
-                  //       TypeAheadField(
-                  //         textFieldConfiguration: TextFieldConfiguration(
-                  //           autofocus: true,
-                  //           style: GoogleFonts.openSans(
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.w600,
-                  //               color: kBlackColor),
-                  //           decoration: InputDecoration(
-                  //             labelText: 'Category',
-                  //             border: OutlineInputBorder(
-                  //               borderRadius: BorderRadius.circular(10),
-                  //             ),
-                  //           ),
-                  //           controller: _typeAheadControllerCategory,
-                  //         ),
-                  //         suggestionsCallback: (pattern) async {
-                  //           return getSuggestionsCategory(pattern.toString());
-                  //         },
-                  //         itemBuilder: (context, suggestion) {
-                  //           return ListTile(
-                  //             title: Text(suggestion.toString()),
-                  //           );
-                  //         },
-                  //         onSuggestionSelected: (suggestion) {
-                  //           _typeAheadControllerCategory.text = suggestion.toString();
-                  //         },
-                  //       ),
-                  //       // )
-                  //     ]
-                  // ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5.0, 100.0, 5.0, 50.0),
+                    padding: const EdgeInsets.only(left: 0, top: 25, right:25),
                     child: Text(
                       'Do you wish to Log Out?',
                       style: GoogleFonts.openSans(
@@ -257,22 +149,127 @@ class _ProfileState extends State<Profile> {
                   }
                 },
                 child: const Icon(Icons.logout)),
-          ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(5.0, 100.0, 5.0, 50.0),
-              child: TextButton(
-                onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Search()),
-                              (route) => false);    
-                },    
-                child: const Text('Search Button'),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(left: 25, top: 25, right:25),
+                 child: Text(
+                   'Favourite Authors',
+                   style: GoogleFonts.openSans(
+                       fontSize: 20,
+                       fontWeight: FontWeight.w600,
+                       color: kGreyColor),
+                 ),
+               ),
+            Container(
+              child: Container(
+                // padding: const EdgeInsets.all(8.0),
+              // child: Text('Bookmark'),
+              child: FutureBuilder(
+                future: db.getFavAuthors(_currentUser.getCurrentUser.uid),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return Container(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 7.0,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        // padding: const EdgeInsets.only(left: 25, right: 6),
+                        itemCount: snapshot.data.length,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // padding: const EdgeInsets.all(5),
+                            width: 150,
+                            height: 40,
+                            child: Column(
+                              // crossAxisAlignment: CrossAxisAlignment.left,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    snapshot.data[index],
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: kBlackColor),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                                
+                              ],
+                            ),
+                          );
+                        });
+                  }
+                },
               ),
+            ),
+            ),
+
+            // for Genre
+            Padding(
+                 padding: const EdgeInsets.only(left: 25, top: 25, right:25),
+                 child: Text(
+                   'Favourite Genre',
+                   style: GoogleFonts.openSans(
+                       fontSize: 20,
+                       fontWeight: FontWeight.w600,
+                       color: kGreyColor),
+                 ),
+               ),
+            Container(
+              child: Container(
+                // padding: const EdgeInsets.all(8.0),
+              // child: Text('Bookmark'),
+              child: FutureBuilder(
+                future: db.getFavGenre(_currentUser.getCurrentUser.uid),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return Container(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 7.0,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        // padding: const EdgeInsets.only(left: 25, right: 6),
+                        itemCount: snapshot.data.length,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            // padding: const EdgeInsets.all(5),
+                            width: 150,
+                            height: 40,
+                            child: Column(
+                              // crossAxisAlignment: CrossAxisAlignment.left,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    snapshot.data[index],
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: kBlackColor),
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                                
+                              ],
+                            ),
+                          );
+                        });
+                  }
+                },
               ),
-            )
+            ),
+            ),
           // ),
         ],
       ),
