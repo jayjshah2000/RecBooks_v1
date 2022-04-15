@@ -64,26 +64,23 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                 backgroundColor: kMainColor,
               ),
               onPressed: () async {
-                returnString = await db
-                    .addBookToBookmark(
-                        _currentUser.getCurrentUser.uid, widget.book.title);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(returnString)));
+                returnString = await db.addBookToBookmark(
+                    _currentUser.getCurrentUser.uid, widget.book.title);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(returnString)));
               },
               child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: kMainColor),
-                          child: SvgPicture.asset(
-                              'assets/icons/Like-Icon-iuhds.svg'),
-                        ),
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: kMainColor),
+                child: SvgPicture.asset('assets/icons/Like-Icon-iuhds.svg'),
+              ),
               // shape:
               //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
           ),
-          
+
           // SizedBox(width: 55),
           Container(
             margin: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
@@ -105,14 +102,12 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
               //       color: kBlackColor),
               // ),
               child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: kMainColor),
-                          child: SvgPicture.asset(
-                              'assets/icons/amazon-icon.svg'),
-                        ),
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5), color: kMainColor),
+                child: SvgPicture.asset('assets/icons/amazon-icon.svg'),
+              ),
               // shape:
               //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
@@ -196,42 +191,43 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                 padding: const EdgeInsets.only(top: 7, left: 25),
                 child: SelectableText.rich(
                   TextSpan(
-                    text:'ISBN 10:  ',
+                    text: 'ISBN 10:  ',
                     style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: kBlackColor,
-                      fontWeight: FontWeight.w400),
+                        fontSize: 14,
+                        color: kBlackColor,
+                        fontWeight: FontWeight.w400),
                     children: <TextSpan>[
                       TextSpan(
                         text: widget.book.isbn_10,
                         style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: kGreyColor,
-                      fontWeight: FontWeight.w400),
+                            fontSize: 14,
+                            color: kGreyColor,
+                            fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
-                ) ,     
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
                 child: SelectableText.rich(
                   TextSpan(
-                    text:'ISBN 13:  ',
+                    text: 'ISBN 13:  ',
                     style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: kBlackColor,
-                      fontWeight: FontWeight.w400),
+                        fontSize: 14,
+                        color: kBlackColor,
+                        fontWeight: FontWeight.w400),
                     children: <TextSpan>[
                       TextSpan(
                         text: widget.book.isbn_13,
                         style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: kGreyColor,
-                      fontWeight: FontWeight.w400),
+                            fontSize: 14,
+                            color: kGreyColor,
+                            fontWeight: FontWeight.w400),
                       ),
-                      ],),
-                ) ,
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
@@ -264,67 +260,70 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       )
                     ],
                   )),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                      margin: const EdgeInsets.only(left: 15, right: 5, bottom: 25),
-                      height: 49,
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      color: Colors.transparent,
-                      child: TextButton(
-                        // color: kMainColor,
-                        style: TextButton.styleFrom(
-                          // primary: kMainColor,
-                          backgroundColor: kMainColor,
-                        ),
-                        onPressed: () async {
-                          returnString = await db
-                              .addAuthorToDatabase(
-                            _currentUser.getCurrentUser.uid, widget.book.author);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(returnString)));
-                  },
-                  child: Text(
-                    'Like Author',
-                    style: GoogleFonts.openSans(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: kBlackColor),
+              Row(
+                children: <Widget>[
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, right: 5, bottom: 25),
+                    height: 49,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    color: Colors.transparent,
+                    child: TextButton(
+                      // color: kMainColor,
+                      style: TextButton.styleFrom(
+                        // primary: kMainColor,
+                        backgroundColor: kMainColor,
+                      ),
+                      onPressed: () async {
+                        returnString = await db.addAuthorToDatabase(
+                            _currentUser.getCurrentUser.uid,
+                            widget.book.author);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(returnString)));
+                      },
+                      child: Text(
+                        'Like Author',
+                        style: GoogleFonts.openSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: kBlackColor),
+                      ),
+                      // shape:
+                      //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
                   ),
-                  // shape:
-                  //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, right: 5, bottom: 25),
+                    height: 49,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    color: Colors.transparent,
+                    child: TextButton(
+                      // color: kMainColor,
+                      style: TextButton.styleFrom(
+                        // primary: kMainColor,
+                        backgroundColor: kMainColor,
+                      ),
+                      onPressed: () async {
+                        returnString = await db.addGenreToDatabase(
+                            _currentUser.getCurrentUser.uid,
+                            widget.book.category);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(returnString)));
+                      },
+                      child: Text(
+                        ' Like Genre',
+                        style: GoogleFonts.openSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: kBlackColor),
+                      ),
+                      // shape:
+                      //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 15, right: 5, bottom: 25),
-                height: 49,
-                width: MediaQuery.of(context).size.width * 0.45,
-                color: Colors.transparent,
-                child: TextButton(
-                  // color: kMainColor,
-                  style: TextButton.styleFrom(
-                    // primary: kMainColor,
-                    backgroundColor: kMainColor,
-                  ),
-                  onPressed: () async {
-                    returnString = await db
-                        .addGenreToDatabase(
-                            _currentUser.getCurrentUser.uid, widget.book.category);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(returnString)));
-                  },
-                  child: Text(
-                    ' Like Genre',
-                    style: GoogleFonts.openSans(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: kBlackColor),
-                  ),
-                  // shape:
-                  //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                ),],
-                  ),
               Padding(
                   padding: const EdgeInsets.all(25),
                   child: Column(
