@@ -62,3 +62,36 @@ Future getRecommendedBookData2(String title) async {
     print('Request failed with status');
   }
 }
+
+
+Future getRecommendedBookData3(List title) async {
+  List<Book> recommendedBooks = [];
+  for(var t in title){
+    var queryParameters = {
+    'title': t,
+  };
+  var response = await http.get(Uri.https(
+      'finalyearprojectapi.herokuapp.com', 'recommend3', queryParameters));
+  if (response.statusCode == 200) {
+    var jsonData = jsonDecode(response.body);
+    for (var i in jsonData['result']) {
+      Book book = Book(
+          i["book_title"],
+          i["book_author"],
+          i["Category"],
+          i["Summary"],
+          i["publisher"],
+          i["img_l"],
+          i["rating"],
+          i['isbn_10'],
+          i['isbn_13']);
+      recommendedBooks.add(book);
+    }
+
+    return recommendedBooks;
+  } else {
+    // print('Request failed with status: ${response.statusCode}.');
+    print('Request failed with status');
+  }
+  }
+}

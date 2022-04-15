@@ -6,6 +6,7 @@ import 'package:recbooks/constants/color_constant.dart';
 import 'package:recbooks/models/random_books.dart';
 // import 'package:recbooks/screens/root/root.dart';
 import 'package:recbooks/screens/selected_book_screen/selected_book_screen.dart';
+import 'package:recbooks/services/database.dart';
 // import 'package:recbooks/screens/login/login.dart';
 import 'package:recbooks/states/current_user.dart';
 
@@ -20,6 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+    // CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+    OurDatabase db = OurDatabase();
 
     return Scaffold(
       
@@ -192,7 +195,8 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: const EdgeInsets.only(top: 10),
             // height: 210,
             child: FutureBuilder(
-                future: getRandomBookData2(),
+                // future: getBookmarkedBooks2(),
+                future: db.getBookmarkedBooks2(_currentUser.getCurrentUser.uid),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return const Center(

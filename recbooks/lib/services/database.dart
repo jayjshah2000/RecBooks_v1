@@ -1,8 +1,14 @@
 // import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:recbooks/models/recommended_books.dart';
 import 'package:recbooks/models/user.dart';
+import 'package:dart_random_choice/dart_random_choice.dart';
 // import 'package:recbooks/states/current_user.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:recbooks/models/book.dart';
 
 class OurDatabase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -43,7 +49,6 @@ class OurDatabase {
     return retVal;
   }
 
-
   // Bookmarking or liking a book
   Future<String> addBookToBookmark(String? uid, String title) async {
     String retVal = "Error";
@@ -83,6 +88,63 @@ class OurDatabase {
     return retVal;
   }
 
+  Future getBookmarkedBooks2(String? uid) async {
+    var retVal = [];
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      retVal = _docSnapshot.get("likedBooks");
+      // retVal.likedBooks = _docSnapshot.get("likedBooks");
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    var hostingProviderList = [
+      'namanshah0008.pythonanywhere.com',
+      'finalyearprojectapi.herokuapp.com'
+    ];
+    var recommendationType = ['recommend1'];
+    List<Book> recommendedBooks = [];
+    retVal.shuffle();
+    var l = 0;
+    if (retVal.length >= 2) {
+      l = 2;
+    } else {
+      l = retVal.length;
+    }
+    for (var i = 0; i <= l; i++) {
+      var queryParameters = {'title': retVal[i]};
+      var response = await http.get(Uri.https(hostingProviderList[0],
+          randomChoice(recommendationType), queryParameters));
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['result'].length == 5) {
+          for (var i in jsonData['result']) {
+            Book book = Book(
+                i["book_title"],
+                i["book_author"],
+                i["Category"],
+                i["Summary"],
+                i["publisher"],
+                i["img_l"],
+                i["rating"],
+                i['isbn_10'],
+                i['isbn_13']);
+            recommendedBooks.add(book);
+          }
+          print("\n\n\n\n\n\n\n\n\n" + retVal[i].toString() + "\n\n\n\n\n\n\n\n\n");
+          return recommendedBooks;
+        } else {
+          print("Length less than 5, so not adding to the list.\n");
+        }
+        ;
+      } else {
+        // print('Request failed with status: ${response.statusCode}.');
+        print('Request failed with status');
+      }
+    }
+    return recommendedBooks;
+  }
 
   // for adding and retrieving Fav authors
   Future<String> addAuthorToDatabase(String? uid, String title) async {
@@ -108,7 +170,6 @@ class OurDatabase {
     return retVal;
   }
 
-
   Future getFavAuthors(String? uid) async {
     var retVal = [];
     try {
@@ -120,7 +181,7 @@ class OurDatabase {
       // ignore: avoid_print
       print(e);
     }
-    print("\n\n\n\n\n\n\n\n\n" + retVal.toString()+"\n\n\n\n\n\n\n\n\n");
+    print("\n\n\n\n\n\n\n\n\n" + retVal.toString() + "\n\n\n\n\n\n\n\n\n");
     return retVal;
   }
 
@@ -135,10 +196,7 @@ class OurDatabase {
         retVal = "Genre already liked";
       } else {
         toBeAdded.add(title);
-        _firestore
-            .collection("users")
-            .doc(uid)
-            .update({"favGenre": toBeAdded});
+        _firestore.collection("users").doc(uid).update({"favGenre": toBeAdded});
         retVal = "Genre added successfully";
       }
     } catch (e) {
