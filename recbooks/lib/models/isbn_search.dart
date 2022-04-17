@@ -24,7 +24,8 @@ Future getISBN13Search(String isbn_13) async {
           i["img_l"],
           i["rating"],
           i['isbn_10'],
-          i['isbn_13']);
+          i['isbn_13'],
+          i['year']);
       recommendedBooks.add(book);
     }
     print(recommendedBooks);
@@ -61,7 +62,8 @@ Future getBookSearch([String? book_title, String? book_author, String? isbn_13, 
           i["img_l"],
           i["rating"],
           i['isbn_10'],
-          i['isbn_13']);
+          i['isbn_13'],
+          i['year']);
       recommendedBooks.add(book);
     }
     print(recommendedBooks);

@@ -189,6 +189,16 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
+                child: Text(
+                  "Published Year " + widget.book.year.toString(),
+                  style: GoogleFonts.openSans(
+                      fontSize: 14,
+                      color: kGreyColor,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 7, left: 25),
                 child: SelectableText.rich(
                   TextSpan(
                     text: 'ISBN 10:  ',

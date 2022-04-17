@@ -129,7 +129,8 @@ class OurDatabase {
                 i["img_l"],
                 i["rating"],
                 i['isbn_10'],
-                i['isbn_13']);
+                i['isbn_13'],
+                i['year']);
             recommendedBooks.add(book);
           }
           print("\n\n\n\n\n\n\n\n\n" + retVal[i].toString() + "\n\n\n\n\n\n\n\n\n");

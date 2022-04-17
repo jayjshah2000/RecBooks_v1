@@ -22,7 +22,8 @@ Future getRecommendedBookData1(String title) async {
           i["img_l"],
           i["rating"],
           i['isbn_10'],
-          i['isbn_13']);
+          i['isbn_13'], 
+          i['year']);
       recommendedBooks.add(book);
     }
 
@@ -52,7 +53,8 @@ Future getRecommendedBookData2(String title) async {
           i["img_l"],
           i["rating"],
           i['isbn_10'],
-          i['isbn_13']);
+          i['isbn_13'], 
+          i['year']);
       recommendedBooks.add(book);
     }
 
@@ -84,7 +86,8 @@ Future getRecommendedBookData3(List title) async {
           i["img_l"],
           i["rating"],
           i['isbn_10'],
-          i['isbn_13']);
+          i['isbn_13'],
+          i['year']);
       recommendedBooks.add(book);
     }
 

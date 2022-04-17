@@ -10,7 +10,7 @@ Future getRandomBookData1() async {
   List<Book> randomBooks = [];
   for (var i in jsonData['result']) {
     Book book = Book(i["book_title"], i["book_author"], i["Category"],
-        i["Summary"], i["publisher"], i["img_l"], i["rating"],i["isbn_10"],i["isbn_13"]);
+        i["Summary"], i["publisher"], i["img_l"], i["rating"],i["isbn_10"],i["isbn_13"], i['year']);
     randomBooks.add(book);
   }
 
@@ -24,7 +24,7 @@ Future getRandomBookData2() async {
   List<Book> randomBooks = [];
   for (var i in jsonData['result']) {
     Book book = Book(i["book_title"], i["book_author"], i["Category"],
-        i["Summary"], i["publisher"], i["img_l"], i["rating"],i["isbn_10"],i["isbn_13"]);
+        i["Summary"], i["publisher"], i["img_l"], i["rating"],i["isbn_10"],i["isbn_13"], i['year']);
     randomBooks.add(book);
   }
 
