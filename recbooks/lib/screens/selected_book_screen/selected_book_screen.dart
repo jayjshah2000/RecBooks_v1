@@ -187,14 +187,35 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                       fontWeight: FontWeight.w400),
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 7, left: 25),
+              //   child: Text(
+              //     "Published Year " + widget.book.year.toInt().toString(),
+              //     style: GoogleFonts.openSans(
+              //         fontSize: 14,
+              //         color: kGreyColor,
+              //         fontWeight: FontWeight.w400),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
-                child: Text(
-                  "Published Year " + widget.book.year.toString(),
-                  style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: kGreyColor,
-                      fontWeight: FontWeight.w400),
+                child: SelectableText.rich(
+                  TextSpan(
+                    text: 'Published Year:  ',
+                    style: GoogleFonts.openSans(
+                        fontSize: 14,
+                        color: kBlackColor,
+                        fontWeight: FontWeight.w400),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.book.year.toInt().toString(),
+                        style: GoogleFonts.openSans(
+                            fontSize: 14,
+                            color: kGreyColor,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -239,14 +260,35 @@ class _SelectedBookScreenState extends State<SelectedBookScreen> {
                   ),
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 7, left: 25),
+              //   child: Text(
+              //     "Category: " + widget.book.category,
+              //     style: GoogleFonts.openSans(
+              //         fontSize: 14,
+              //         color: Colors.black,
+              //         fontWeight: FontWeight.w400),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 7, left: 25),
-                child: Text(
-                  "Category: " + widget.book.category,
-                  style: GoogleFonts.openSans(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
+                child: SelectableText.rich(
+                  TextSpan(
+                    text: 'Category:  ',
+                    style: GoogleFonts.openSans(
+                        fontSize: 14,
+                        color: kBlackColor,
+                        fontWeight: FontWeight.w400),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.book.category,
+                        style: GoogleFonts.openSans(
+                            fontSize: 14,
+                            color: kGreyColor,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
