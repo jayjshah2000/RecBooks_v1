@@ -1,0 +1,11 @@
+flask_app
+pandas
+numpy
+requests
+nltk
+requests
+pandas
+numpy
+matplotlib
+sklearn
+gunicorn
