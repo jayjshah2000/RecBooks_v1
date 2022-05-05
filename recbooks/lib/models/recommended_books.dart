@@ -8,7 +8,7 @@ Future getRecommendedBookData1(String title) async {
     'title': title,
   };
   var response = await http.get(Uri.https(
-      'namanshah0008.pythonanywhere.com', 'recommend1', queryParameters));
+      'namanshah0008.pythonanywhere.com', 'recommend3', queryParameters));
   if (response.statusCode == 200) {
     var jsonData = jsonDecode(response.body);
     List<Book> recommendedBooks = [];
@@ -39,7 +39,7 @@ Future getRecommendedBookData2(String title) async {
     'title': title,
   };
   var response = await http.get(Uri.https(
-      'finalyearprojectapi.herokuapp.com', 'recommend3', queryParameters));
+      'namanshah0008.pythonanywhere.com', 'recommend2', queryParameters));
   if (response.statusCode == 200) {
     var jsonData = jsonDecode(response.body);
     List<Book> recommendedBooks = [];
@@ -73,7 +73,7 @@ Future getRecommendedBookData3(List title) async {
     'title': t,
   };
   var response = await http.get(Uri.https(
-      'finalyearprojectapi.herokuapp.com', 'recommend3', queryParameters));
+      'namanshah0008.pythonanywhere.com', 'recommend3', queryParameters));
   if (response.statusCode == 200) {
     var jsonData = jsonDecode(response.body);
     for (var i in jsonData['result']) {

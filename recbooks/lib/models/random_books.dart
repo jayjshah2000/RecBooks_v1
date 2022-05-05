@@ -5,7 +5,7 @@ import 'package:recbooks/models/book.dart';
 
 Future getRandomBookData1() async {
   var response =
-      await http.get(Uri.https('finalyearprojectapi.herokuapp.com', 'homepage'));
+      await http.get(Uri.https('namanshah0008.pythonanywhere.com', 'homepage'));
   var jsonData = jsonDecode(response.body);
   List<Book> randomBooks = [];
   for (var i in jsonData['result']) {
