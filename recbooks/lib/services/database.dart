@@ -73,6 +73,29 @@ class OurDatabase {
     return retVal;
   }
 
+  Future<String> addTitleToBookmark(String? uid, String title) async {
+    String retVal = "Error";
+    try {
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
+      List toBeAdded = _docSnapshot.get("likedBooks");
+      if (toBeAdded.contains(title)) {
+        retVal = "Already added book to liked books";
+      } else {
+        toBeAdded.add(title);
+        _firestore
+            .collection("users")
+            .doc(uid)
+            .update({"likedBooks": toBeAdded});
+        retVal = "Book added successfully";
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
+  }
+
   Future getBookmarkedBooks(String? uid) async {
     var retVal = [];
     try {
@@ -85,7 +108,41 @@ class OurDatabase {
       print(e);
     }
     // print("\n\n\n\n\n\n\n\n\n" + retVal.toString()+"\n\n\n\n\n\n\n\n\n");
-    return retVal;
+    print("\n\n\n\n\n\n\n\n\n" +
+        retVal.runtimeType.toString() +
+        "\n\n\n\n\n\n\n\n\n");
+    List<Book> recommendedBooks = [];
+    for (var title in retVal) {
+      print(title);
+      var queryParameters = {
+        'title': title.toString(),
+      };
+      var response = await http.get(Uri.https(
+          'namanshah0008.pythonanywhere.com', 'search', queryParameters));
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        for (var i in jsonData['result']) {
+          Book book = Book(
+              i["book_title"],
+              i["book_author"],
+              i["Category"],
+              i["Summary"],
+              i["publisher"],
+              i["img_l"],
+              i["rating"],
+              i['isbn_10'],
+              i['isbn_13'],
+              i['year']);
+          recommendedBooks.add(book);
+        }
+        // print(recommendedBooks);
+        // return recommendedBooks;
+      } else {
+        // print('Request failed with status: ${response.statusCode}.');
+        print('Request failed with status ${response.statusCode}');
+      }
+    }
+    return recommendedBooks;
   }
 
   Future getBookmarkedBooks2(String? uid) async {
@@ -133,7 +190,9 @@ class OurDatabase {
                 i['year']);
             recommendedBooks.add(book);
           }
-          print("\n\n\n\n\n\n\n\n\n" + retVal[i].toString() + "\n\n\n\n\n\n\n\n\n");
+          print("\n\n\n\n\n\n\n\n\n" +
+              retVal[i].toString() +
+              "\n\n\n\n\n\n\n\n\n");
           return recommendedBooks;
         } else {
           print("Length less than 5, so not adding to the list.\n");

@@ -98,3 +98,39 @@ Future getRecommendedBookData3(List title) async {
   }
   }
 }
+
+
+// Future BookmarkedListBooks(Future<dynamic> titles) async {
+//   List<Book> recommendedBooks = [];
+//   List newTitles = titles;
+//   // var newTitles = new List<String>.from(titles);
+//   for (var title in titles) {
+//     var queryParameters = {
+//     'title': title.toString(),
+//   };
+//   var response = await http.get(Uri.https(
+//       'namanshah0008.pythonanywhere.com', 'recommend2', queryParameters));
+//   if (response.statusCode == 200) {
+//     var jsonData = jsonDecode(response.body);
+//     for (var i in jsonData['result']) {
+//       Book book = Book(
+//           i["book_title"],
+//           i["book_author"],
+//           i["Category"],
+//           i["Summary"],
+//           i["publisher"],
+//           i["img_l"],
+//           i["rating"],
+//           i['isbn_10'],
+//           i['isbn_13'], 
+//           i['year']);
+//       recommendedBooks.add(book);
+//     }
+//   } else {
+//     // print('Request failed with status: ${response.statusCode}.');
+//     print('Request failed with status');
+//   }
+//   }
+//   print("\n\n\n\n\n\n\n"+ recommendedBooks.toString());
+//   return recommendedBooks;
+// }
