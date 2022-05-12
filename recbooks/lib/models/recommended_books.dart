@@ -8,7 +8,7 @@ Future getRecommendedBookData1(String title) async {
     'title': title,
   };
   var response = await http.get(Uri.https(
-      'namanshah0008.pythonanywhere.com', 'recommend3', queryParameters));
+      'namanshah0008.pythonanywhere.com', 'recommend1', queryParameters));
   if (response.statusCode == 200) {
     var jsonData = jsonDecode(response.body);
     List<Book> recommendedBooks = [];
