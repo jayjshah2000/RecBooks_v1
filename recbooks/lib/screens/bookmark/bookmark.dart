@@ -110,7 +110,7 @@ class _BookmarkState extends State<Bookmark> {
             // height: 210,
             child: FutureBuilder(
                 // future: getBookmarkedBooks2(),
-                future: db.getBookmarkedBooks2(_currentUser.getCurrentUser.uid),
+                future: db.getBookmarkedBooks(_currentUser.getCurrentUser.uid),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return const Center(
